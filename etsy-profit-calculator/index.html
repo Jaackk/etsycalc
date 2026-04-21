@@ -695,6 +695,10 @@
         overflow: hidden;
       }
 
+      .advanced-panel.mode-hidden {
+        display: none;
+      }
+
       .advanced-toggle {
         width: 100%;
         padding: 14px 16px;
@@ -2594,6 +2598,7 @@
       }
 
       function syncAdvancedPanel() {
+        advancedPanel.classList.toggle("mode-hidden", !advancedMode);
         advancedPanel.classList.toggle("is-collapsed", !advancedVisible);
         advancedToggleButton.setAttribute("aria-expanded", String(advancedVisible));
         advancedToggleButton.querySelector(".advanced-toggle-left span:last-child").textContent = advancedVisible
