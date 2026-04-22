@@ -2095,7 +2095,7 @@
                   </div>
                 </div>
 
-                <div class="button-row">
+                <div class="button-row" id="advancedModeActionRow">
                   <button type="submit" class="action-button" id="calculateButton">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
                       <rect x="4" y="3" width="16" height="18" rx="2" />
@@ -2110,7 +2110,7 @@
                   <button type="button" class="ghost-button" id="resetButton">Reset</button>
                 </div>
 
-                <div class="privacy-note">
+                <div class="privacy-note" id="advancedModePrivacyNote">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                     <rect x="5" y="11" width="14" height="9" rx="2" />
                     <path d="M8 11V8a4 4 0 1 1 8 0v3" />
@@ -2490,9 +2490,14 @@
         privacyNote: document.querySelector(".privacy-note"),
         simpleModeActionRow: document.getElementById("simpleModeActionRow"),
         simpleModePrivacyNote: document.getElementById("simpleModePrivacyNote"),
+        advancedModeActionRow: document.getElementById("advancedModeActionRow"),
+        advancedModePrivacyNote: document.getElementById("advancedModePrivacyNote"),
         simpleCalculateButton: document.getElementById("simpleCalculateButton"),
         simpleResetButton: document.getElementById("simpleResetButton")
       };
+
+      advancedPanel.insertAdjacentElement("afterend", els.advancedModeActionRow);
+      els.advancedModeActionRow.insertAdjacentElement("afterend", els.advancedModePrivacyNote);
 
       const currencyFormatter = new Intl.NumberFormat("en-GB", {
         style: "currency",
@@ -2720,8 +2725,11 @@
         simpleModeButton.setAttribute("aria-pressed", String(!advancedMode));
         advancedModeButton.setAttribute("aria-pressed", String(advancedMode));
         const showSimpleActions = !advancedMode;
+        const showAdvancedActions = advancedMode;
         els.simpleModeActionRow.style.display = showSimpleActions ? "grid" : "none";
         els.simpleModePrivacyNote.style.display = showSimpleActions ? "inline-flex" : "none";
+        els.advancedModeActionRow.style.display = showAdvancedActions ? "grid" : "none";
+        els.advancedModePrivacyNote.style.display = showAdvancedActions ? "inline-flex" : "none";
       }
 
       function syncAdvancedPanel() {
