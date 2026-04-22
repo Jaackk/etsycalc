@@ -589,6 +589,27 @@
         background: linear-gradient(180deg, #fff 0%, #fcfbf8 100%);
       }
 
+      .field-row.sales-month-row {
+        grid-template-columns: auto minmax(0, 1fr) 272px;
+      }
+
+      .field-row.sales-month-row .field-toggle-input {
+        justify-content: flex-end;
+      }
+
+      .field-row.sales-month-row .field-toggle-input .field-input {
+        flex: 0 0 92px;
+        width: 92px;
+        min-width: 92px;
+      }
+
+      .field-row.sales-month-row .field-toggle-input .field-input input {
+        min-width: 92px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+
       .field-icon {
         width: 28px;
         height: 28px;
@@ -828,6 +849,25 @@
         gap: 10px;
       }
 
+      .field-toggle-input {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        width: 100%;
+        flex-wrap: nowrap;
+      }
+
+      .field-toggle-input .toggle-stack {
+        flex: 0 0 auto;
+      }
+
+      .field-toggle-input .field-input {
+        flex: 0 0 120px;
+        width: 120px;
+        min-width: 120px;
+      }
+
       .toggle-label {
         color: var(--ink-soft);
         font-weight: 800;
@@ -880,6 +920,10 @@
         grid-template-columns: 1fr auto;
         gap: 10px;
         margin-top: 12px;
+      }
+
+      .advanced-panel + .button-row {
+        margin-top: 16px;
       }
 
       .action-button,
@@ -1452,11 +1496,13 @@
         }
 
         .field-input,
-        .toggle-stack {
+        .toggle-stack,
+        .field-toggle-input {
           grid-column: 1 / -1;
         }
 
-        .toggle-stack {
+        .toggle-stack,
+        .field-toggle-input {
           justify-content: flex-start;
           padding-left: 40px;
         }
@@ -1720,6 +1766,56 @@
                       <input id="shippingCostToYou" name="shippingCostToYou" type="number" min="0" step="0.01" value="2.50" inputmode="decimal" />
                     </div>
                   </div>
+
+                  <div class="field-row sales-month-row">
+                    <div class="field-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19h16" />
+                        <path d="M7 16V9" />
+                        <path d="M12 16V5" />
+                        <path d="M17 16v-4" />
+                      </svg>
+                    </div>
+                    <div class="field-copy">
+                      <label for="simpleSalesPerMonth">Sales per month</label>
+                      <p>Used for your monthly estimate on the right</p>
+                    </div>
+                    <div class="field-toggle-input">
+                      <div class="toggle-stack">
+                        <span class="toggle-label" id="simpleSalesPerMonthState">On</span>
+                        <label class="toggle">
+                          <input id="simpleSalesPerMonthEnabled" name="simpleSalesPerMonthEnabled" type="checkbox" checked />
+                          <span class="toggle-ui" aria-hidden="true"></span>
+                        </label>
+                      </div>
+                      <div class="field-input">
+                        <input id="simpleSalesPerMonth" name="simpleSalesPerMonth" type="number" min="0" step="1" value="30" inputmode="numeric" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="button-row" id="simpleModeActionRow">
+                  <button type="button" class="action-button" id="simpleCalculateButton">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="4" y="3" width="16" height="18" rx="2" />
+                      <path d="M8 7h8" />
+                      <path d="M8 11h3" />
+                      <path d="M13 11h3" />
+                      <path d="M8 15h3" />
+                      <path d="M13 15h3" />
+                    </svg>
+                    <span>Calculate My Profit</span>
+                  </button>
+                  <button type="button" class="ghost-button" id="simpleResetButton">Reset</button>
+                </div>
+
+                <div class="privacy-note" id="simpleModePrivacyNote">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="5" y="11" width="14" height="9" rx="2" />
+                    <path d="M8 11V8a4 4 0 1 1 8 0v3" />
+                  </svg>
+                  <span>Your data is private and never stored.</span>
                 </div>
 
                 <div class="advanced-panel is-collapsed" id="advancedPanel">
@@ -1993,23 +2089,8 @@
                     </div>
                   </div>
 
-                  <div class="field-row">
-                    <div class="field-icon" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 19h16" />
-                        <path d="M7 16V9" />
-                        <path d="M12 16V5" />
-                        <path d="M17 16v-4" />
-                      </svg>
-                    </div>
-                    <div class="field-copy">
-                      <label for="salesPerMonth">Sales per month</label>
-                      <p>Used for your monthly estimate on the right</p>
-                    </div>
-                    <div class="field-input">
-                      <input id="salesPerMonth" name="salesPerMonth" type="number" min="0" step="1" value="30" inputmode="numeric" />
-                    </div>
-                  </div>
+                  <input id="salesPerMonthEnabled" name="salesPerMonthEnabled" type="hidden" value="true" />
+                  <input id="salesPerMonth" name="salesPerMonth" type="hidden" value="30" />
                 </div>
                   </div>
                 </div>
@@ -2170,9 +2251,9 @@
 
                     <aside class="tip-box" id="tipBox">
                       <h4>Pricing Goal</h4>
-                      <p>To reach a 30% profit margin, your price should be:</p>
+                      <p id="tipIntro">To reach a 30% profit margin, your price should be:</p>
                       <div class="tip-price" id="targetPrice">£0.00</div>
-                      <div class="tip-label">You'd need to increase your price by</div>
+                      <div class="tip-label" id="tipDeltaLabel">You'd need to increase your price by</div>
                       <div class="tip-delta" id="targetDelta">£0.00</div>
                       <p id="tipSupport">Small pricing changes can make a big difference to your take-home profit.</p>
                     </aside>
@@ -2319,7 +2400,8 @@
         currencyConversionPercent: 2.5,
         listingFeeEnabled: true,
         listingFeeAmount: 0.16,
-        salesPerMonth: 30
+        salesPerMonth: 30,
+        salesPerMonthEnabled: true
       };
 
       const form = document.getElementById("calculatorForm");
@@ -2349,6 +2431,10 @@
         currencyConversionPercent: document.getElementById("currencyConversionPercent"),
         listingFeeEnabled: document.getElementById("listingFeeEnabled"),
         listingFeeAmount: document.getElementById("listingFeeAmount"),
+        simpleSalesPerMonthEnabled: document.getElementById("simpleSalesPerMonthEnabled"),
+        simpleSalesPerMonthState: document.getElementById("simpleSalesPerMonthState"),
+        simpleSalesPerMonth: document.getElementById("simpleSalesPerMonth"),
+        salesPerMonthEnabled: document.getElementById("salesPerMonthEnabled"),
         salesPerMonth: document.getElementById("salesPerMonth"),
         offsiteAdsState: document.getElementById("offsiteAdsState"),
         vatState: document.getElementById("vatState"),
@@ -2379,6 +2465,8 @@
         lineShippingCost: document.getElementById("lineShippingCost"),
         lineProfit: document.getElementById("lineProfit"),
         targetPrice: document.getElementById("targetPrice"),
+        tipIntro: document.getElementById("tipIntro"),
+        tipDeltaLabel: document.getElementById("tipDeltaLabel"),
         targetDelta: document.getElementById("targetDelta"),
         tipSupport: document.getElementById("tipSupport"),
         insightCopy: document.getElementById("insightCopy"),
@@ -2399,7 +2487,11 @@
         tipBox: document.getElementById("tipBox"),
         resetButton: document.getElementById("resetButton"),
         buttonRow: document.querySelector(".button-row"),
-        privacyNote: document.querySelector(".privacy-note")
+        privacyNote: document.querySelector(".privacy-note"),
+        simpleModeActionRow: document.getElementById("simpleModeActionRow"),
+        simpleModePrivacyNote: document.getElementById("simpleModePrivacyNote"),
+        simpleCalculateButton: document.getElementById("simpleCalculateButton"),
+        simpleResetButton: document.getElementById("simpleResetButton")
       };
 
       const currencyFormatter = new Intl.NumberFormat("en-GB", {
@@ -2459,7 +2551,8 @@
           currencyConversionPercent: clampFloat(els.currencyConversionPercent.value, 0, 100),
           listingFeeEnabled: els.listingFeeEnabled.checked,
           listingFeeAmount: clampFloat(els.listingFeeAmount.value, 0, 1000000),
-          salesPerMonth: clampInt(els.salesPerMonth.value, 0, 1000000)
+          salesPerMonthEnabled: els.simpleSalesPerMonthEnabled.checked,
+          salesPerMonth: clampInt(els.simpleSalesPerMonth.value, 0, 1000000)
         };
       }
 
@@ -2516,6 +2609,7 @@
       // targetMargin = (totalSalePrice - all_fees - costToMake - shippingCostToYou) / totalSalePrice
       // assuming shipping charged to customer stays constant while item price changes.
       function calculateTargetPrice(state, targetMargin = 0.3) {
+        const currentResult = calculate(state);
         const currentShippingCharge = state.shippingCharged;
         const feeRate = state.transactionFeePercent / 100;
         const processingRate = state.paymentProcessingPercent / 100;
@@ -2542,18 +2636,27 @@
         }
 
         if (coefficient <= 0) {
+          if (currentResult.profitMargin >= targetMargin * 100) {
+            return { valid: true, targetPrice: 0, delta: -state.sellingPrice, achieved: true };
+          }
           return { valid: false, targetPrice: null, delta: null };
         }
 
         const targetPrice = -constant / coefficient;
-        if (!Number.isFinite(targetPrice) || targetPrice < 0) {
+        if (!Number.isFinite(targetPrice)) {
+          if (currentResult.profitMargin >= targetMargin * 100) {
+            return { valid: true, targetPrice: 0, delta: -state.sellingPrice, achieved: true };
+          }
           return { valid: false, targetPrice: null, delta: null };
         }
 
+        const normalizedTargetPrice = Math.max(targetPrice, 0);
+
         return {
           valid: true,
-          targetPrice,
-          delta: targetPrice - state.sellingPrice
+          targetPrice: normalizedTargetPrice,
+          delta: normalizedTargetPrice - state.sellingPrice,
+          achieved: normalizedTargetPrice <= state.sellingPrice
         };
       }
 
@@ -2578,12 +2681,22 @@
           };
         }
 
+        if (margin < 30) {
+          return {
+            label: "Good",
+            className: "good",
+            mainInsight: "Your margin looks healthy based on this calculation.",
+            sideInsight: `${formatPercent(margin)} is healthy. Your pricing looks stronger than many low-margin Etsy listings.`,
+            tips: ["Protect your margin as costs rise", "Test premium variants", "Track ad-driven orders separately"]
+          };
+        }
+
         return {
-          label: "Good",
+          label: "Strong",
           className: "good",
-          mainInsight: "Your margin looks healthy based on this calculation.",
-          sideInsight: `${formatPercent(margin)} is strong. Your pricing looks healthier than many low-margin Etsy listings.`,
-          tips: ["Protect your margin as costs rise", "Test premium variants", "Track ad-driven orders separately"]
+          mainInsight: "Your margin looks very strong based on this calculation.",
+          sideInsight: `${formatPercent(margin)} is very strong. You have meaningful room to protect profit or test pricing.`,
+          tips: ["Protect your margin as costs rise", "Use the headroom to test conversion", "Track premium pricing separately"]
         };
       }
 
@@ -2606,6 +2719,9 @@
         advancedModeButton.classList.toggle("active", advancedMode);
         simpleModeButton.setAttribute("aria-pressed", String(!advancedMode));
         advancedModeButton.setAttribute("aria-pressed", String(advancedMode));
+        const showSimpleActions = !advancedMode;
+        els.simpleModeActionRow.style.display = showSimpleActions ? "grid" : "none";
+        els.simpleModePrivacyNote.style.display = showSimpleActions ? "inline-flex" : "none";
       }
 
       function syncAdvancedPanel() {
@@ -2644,6 +2760,7 @@
         els.offsiteAdsPercent.value = state.offsiteAdsPercent.toFixed(1);
         els.currencyConversionPercent.value = state.currencyConversionPercent.toFixed(1);
         els.listingFeeAmount.value = state.listingFeeAmount.toFixed(2);
+        els.simpleSalesPerMonth.value = String(state.salesPerMonth);
         els.salesPerMonth.value = String(state.salesPerMonth);
       }
 
@@ -2674,13 +2791,20 @@
           : "VAT is deducted as a cost";
         els.currencyState.textContent = state.currencyConversionEnabled ? "On" : "Off";
         els.listingState.textContent = state.listingFeeEnabled ? "On" : "Off";
+        els.simpleSalesPerMonthState.textContent = state.salesPerMonthEnabled ? "On" : "Off";
         els.buttonRow.style.display = "grid";
         els.privacyNote.style.display = "inline-flex";
+        els.simpleSalesPerMonthEnabled.checked = state.salesPerMonthEnabled;
+        els.simpleSalesPerMonth.value = String(state.salesPerMonth);
+        els.salesPerMonthEnabled.value = state.salesPerMonthEnabled ? "true" : "false";
+        els.salesPerMonth.value = String(state.salesPerMonth);
+        els.simpleSalesPerMonth.disabled = !state.salesPerMonthEnabled;
 
         els.profitPerSale.textContent = formatMoney(result.profitPerSale);
         els.profitMargin.textContent = formatPercent(result.profitMargin);
         els.monthlyProfit.textContent = formatMoney(result.monthlyProfit);
         els.monthlyContext.textContent = `Based on ${state.salesPerMonth} sales per month`;
+        els.monthlyBar.style.display = state.salesPerMonthEnabled ? "flex" : "none";
 
         els.marginBadge.textContent = status.label;
         els.marginBadge.className = `status-badge ${status.className}`;
@@ -2717,13 +2841,22 @@
         setRowVisibility(els.currencyRow, state.currencyConversionEnabled);
 
         if (target.valid) {
-          els.targetPrice.textContent = formatMoney(target.targetPrice);
-          els.targetDelta.textContent = formatMoney(Math.max(target.delta, 0));
-          els.tipSupport.textContent =
-            target.delta <= 0
-              ? "You're already at or above a 30% margin using the current assumptions."
-              : "Small pricing changes can make a big difference to your take-home profit.";
+          if (target.delta > 0) {
+            els.targetPrice.textContent = formatMoney(target.targetPrice);
+            els.tipIntro.textContent = "To reach a 30% profit margin, your price should be:";
+            els.tipDeltaLabel.textContent = "You'd need to increase your price by";
+            els.targetDelta.textContent = formatMoney(target.delta);
+            els.tipSupport.textContent = "Small pricing changes can make a big difference to your take-home profit.";
+          } else {
+            els.targetPrice.textContent = formatPercent(result.profitMargin);
+            els.tipIntro.textContent = "You're already above the 30% profit margin target.";
+            els.tipDeltaLabel.textContent = "Headroom above target";
+            els.targetDelta.textContent = formatPercent(result.profitMargin - 30);
+            els.tipSupport.textContent = "You don't need to raise your price to hit the target with the current assumptions.";
+          }
         } else {
+          els.tipIntro.textContent = "To reach a 30% profit margin, your price should be:";
+          els.tipDeltaLabel.textContent = "You'd need to increase your price by";
           els.targetPrice.textContent = "Unavailable";
           els.targetDelta.textContent = "Unavailable";
           els.tipSupport.textContent = "This fee combination leaves too little room to hit a 30% target margin with this model.";
@@ -2758,6 +2891,8 @@
         els.currencyConversionPercent.value = defaults.currencyConversionPercent.toFixed(1);
         els.listingFeeEnabled.checked = defaults.listingFeeEnabled;
         els.listingFeeAmount.value = defaults.listingFeeAmount.toFixed(2);
+        els.simpleSalesPerMonthEnabled.checked = defaults.salesPerMonthEnabled;
+        els.simpleSalesPerMonth.value = String(defaults.salesPerMonth);
         els.salesPerMonth.value = String(defaults.salesPerMonth);
         updateUI();
       }
@@ -2779,6 +2914,7 @@
         els.offsiteAdsPercent,
         els.currencyConversionPercent,
         els.listingFeeAmount,
+        els.simpleSalesPerMonth,
         els.salesPerMonth,
         els.vatMode
       ].forEach((input) => {
@@ -2792,11 +2928,23 @@
         }
       });
 
-      [els.offsiteAdsEnabled, els.vatRegistered, els.currencyConversionEnabled, els.listingFeeEnabled].forEach((input) => {
+      [els.offsiteAdsEnabled, els.vatRegistered, els.currencyConversionEnabled, els.listingFeeEnabled, els.simpleSalesPerMonthEnabled].forEach((input) => {
         input.addEventListener("change", updateUI);
       });
 
       els.resetButton.addEventListener("click", resetForm);
+      els.simpleCalculateButton.addEventListener("click", () => form.requestSubmit());
+      els.simpleResetButton.addEventListener("click", resetForm);
+
+      els.simpleSalesPerMonth.addEventListener("input", () => {
+        els.salesPerMonth.value = els.simpleSalesPerMonth.value;
+        updateUI();
+      });
+
+      els.simpleSalesPerMonthEnabled.addEventListener("change", () => {
+        els.salesPerMonthEnabled.value = els.simpleSalesPerMonthEnabled.checked ? "true" : "false";
+        updateUI();
+      });
 
       simpleModeButton.addEventListener("click", () => {
         advancedMode = false;
